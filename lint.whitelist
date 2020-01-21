@@ -758,7 +758,7 @@ TESTHARNESS-IN-OTHER-TYPE: svg/extensibility/foreignObject/foreign-object-under-
 TESTHARNESS-IN-OTHER-TYPE: svg/extensibility/foreignObject/foreign-object-under-defs-crash.html
 TESTHARNESS-IN-OTHER-TYPE: svg/svg-in-svg/svg-in-svg-circular-filter-reference-crash.html
 
-# Unconvverted tests using PROMISE_REJECTS
+# Unconverted tests using PROMISE_REJECTS
 PROMISE_REJECTS:FileAPI/url/cross-global-revoke.sub.html
 PROMISE_REJECTS:FileAPI/url/url-lifetime.html
 PROMISE_REJECTS:FileAPI/url/url-with-fetch.any.js
@@ -1089,7 +1089,7 @@ PROMISE_REJECTS:webxr/xrSession_requestReferenceSpace_features.https.html
 PROMISE_REJECTS:webxr/xrSession_viewer_availability.https.html
 PROMISE_REJECTS:worklets/resources/import-tests.js
 
-# Unconvverted tests using ASSERT_THROWS
+# Unconverted tests using ASSERT_THROWS
 ASSERT_THROWS:2dcontext/conformance-requirements/2d.missingargs.html
 ASSERT_THROWS:2dcontext/drawing-images-to-the-canvas/2d.drawImage.null.html
 ASSERT_THROWS:2dcontext/drawing-images-to-the-canvas/2d.drawImage.wrongtype.html
