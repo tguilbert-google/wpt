@@ -304,20 +304,6 @@ test(t => {
   const target = addDiv(t, { 'id': 'target' });
   target.style.animation = 'anim1 100s';
 
-  const animations = target.getAnimations({ subtree: false });
-  assert_equals(animations.length, 1,
-                'Should find only the element');
-  assert_equals(animations[0].effect.target, target,
-                'Effect target should be the element');
-}, '{ subtree: false } on a leaf element returns the element\'s animations'
-   + ' and ignore pseudo-elements');
-
-test(t => {
-  addStyle(t, { '#target::after': 'animation: anim1 10s;',
-                '#target::before': 'animation: anim1 10s;' });
-  const target = addDiv(t, { 'id': 'target' });
-  target.style.animation = 'anim1 100s';
-
   const animations = target.getAnimations({ subtree: true });
   assert_equals(animations.length, 3,
                 'getAnimations({ subtree: true }) ' +
@@ -403,6 +389,42 @@ test(t => {
                 'This ::after element should be child of child element');
 }, '{ subtree: true } on an element with a child returns animations from the'
    + ' element, its pseudo-elements, its child and its child pseudo-elements');
+
+test(t => {
+  addStyle(t, { '#parent::after': 'animation: anim1 10s;',
+                '#parent::before': 'animation: anim1 10s;'});
+  const parent = addDiv(t, { 'id': 'parent' });
+  const child = addDiv(t, { 'id': 'child' });
+  parent.style.animation = 'anim1 100s';
+  child.style.animation = 'anim1 100s';
+  parent.appendChild(child);
+
+  const animations = parent.getAnimations({ subtree: true });
+  assert_equals(animations.length, 4,
+                'Should find all elements, pseudo-elements that parent has');
+
+  assert_equals(animations[0].effect.target, parent,
+                'The animation targeting the parent element ' +
+                'should be returned first');
+  assert_equals(animations[0].effect.pseudoElement, null,
+                'The animation targeting the parent element ' +
+                'should be returned first');
+  assert_equals(animations[1].effect.pseudoElement, '::before',
+                'The animation targeting the ::before pseudo-element ' +
+                'should be returned second');
+  assert_equals(animations[1].effect.target, parent,
+                'This ::before element should be child of parent element');
+  assert_equals(animations[2].effect.pseudoElement, '::after',
+                'The animation targeting the ::after pesudo-element ' +
+                'should be returned third');
+  assert_equals(animations[2].effect.target, parent,
+                'This ::after element should be child of parent element');
+
+  assert_equals(animations[3].effect.target, child,
+                'The animation targeting the child element ' +
+                'should be returned fourth');
+}, '{ subtree: true } on an element with a child returns animations from the'
+   + ' element, its pseudo-elements, its child');
 
 test(t => {
   const parent = addDiv(t, { 'id': 'parent' });
